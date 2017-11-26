@@ -1,0 +1,120 @@
+class program {
+
+void inicio() {
+    while (notFacingEast) turnleft();
+    while (frontIsClear) move();
+    iterate(2) turnleft();
+    while (frontIsClear) {
+        while (frontIsClear && leftIsBlocked) move();
+        if (leftIsClear) {
+            turnleft();
+            move();
+            turnleft();
+            while (frontIsClear) move();
+            iterate(2) turnleft();
+        }
+    }
+}
+
+void regresa() {
+    while (notFacingSouth) turnleft();
+    while (notNextToABeeper) move();
+}
+
+void regresa2() {
+    while (notFacingWest) turnleft();
+    while (frontIsClear && nextToABeeper) {
+        pickbeeper();
+        move();
+    }
+    if (notNextToABeeper) {
+        iterate(2) turnleft();
+        move();
+    }
+    else {
+        iterate(2) turnleft();
+        pickbeeper();
+    }
+}
+
+void checar(n) {
+    turnleft();
+    putbeeper();
+    iterate(n) {
+        iterate(pred(n)) if (frontIsClear) move();
+        if (frontIsClear) {
+            regresa();
+            turnleft();
+            if (frontIsClear) {
+                move();
+                turnleft();              
+                putbeeper();
+            }
+        }
+    }
+    if (facingNorth && frontIsClear) {
+        iterate(pred(n)) if (frontIsClear) move();
+        if (frontIsClear) {
+            regresa();
+            regresa2();
+            putbeeper();
+        }
+    }
+    if (frontIsBlocked) {
+        if (facingNorth)
+            regresa();
+        regresa2();
+    }
+}
+
+void checar2() {
+    if (leftIsClear && frontIsClear) {
+        move();
+        if (leftIsClear) {
+            putbeeper();
+        }
+        else {
+            iterate(2) turnleft();
+            move();
+            iterate(2) turnleft();
+        }
+    }
+}
+
+void lado(n) {
+    while (notFacingEast) turnleft();
+    while (frontIsClear) {
+        while (frontIsClear) {
+            if (iszero(pred(pred(n)))) {
+                checar2();
+            }
+            else
+                checar(pred(n));
+            if (nextToABeeper) {
+                pickbeeper();
+                inicio();
+                lado(succ(n));
+            }
+            move();
+        }
+        iterate(2) turnleft();
+        while (frontIsClear && rightIsBlocked) move();
+        if (rightIsClear) {
+            iterate(3) turnleft();
+            move();
+            turnleft();
+            while (frontIsClear) move();
+            iterate(2) turnleft();
+        }
+    }
+    inicio();
+    iterate(pred(n)) iterate(pred(n)) putbeeper();
+    turnoff();
+}
+
+program() {
+    lado(2);
+    turnoff();
+}
+
+}

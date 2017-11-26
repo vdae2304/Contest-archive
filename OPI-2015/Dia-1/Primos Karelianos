@@ -1,0 +1,98 @@
+class program {
+    void inicio() {
+        iterate(2) turnleft();
+        while (frontIsClear)
+            move();
+    }
+
+    void sies(k) {
+        iterate(pred(k)) if (nextToABeeper) pickbeeper();
+        if (nextToABeeper)
+            pickbeeper();
+        if (notNextToABeeper) {
+            inicio();
+            iterate(3) turnleft();
+            turnoff();
+        }
+        else while (nextToABeeper)
+            pickbeeper();
+    }
+
+    void dividir(k) {
+        iterate(pred(k)) if (nextToABeeper) pickbeeper();
+        if (nextToABeeper) {
+            pickbeeper();
+            if (nextToABeeper) {
+                dividir(k);
+            }
+            else {
+                inicio();
+                turnleft();
+                turnoff();
+            }
+        }
+    }
+
+    void barrido(n) {
+        if (nextToABeeper) {
+            pickbeeper();
+            barrido(succ(n));
+        }
+        else if (frontIsClear) {
+            move();
+            barrido(n);
+        }
+        else {
+            iterate(n) putbeeper();
+            if (iszero(pred(n))) {
+                inicio();
+                turnleft();
+                turnoff();
+            }
+            sies(2);
+            iterate(n) putbeeper();
+            dividir(2);
+            iterate(n) putbeeper();
+            sies(3);
+            iterate(n) putbeeper();
+            dividir(3);
+            iterate(n) putbeeper();
+            sies(5);
+            iterate(n) putbeeper();
+            dividir(5);
+            iterate(n) putbeeper();
+            sies(7);
+            iterate(n) putbeeper();
+            dividir(7);
+            iterate(n) putbeeper();
+            sies(11);
+            iterate(n) putbeeper();
+            dividir(11);
+            iterate(n) putbeeper();
+            sies(13);
+            iterate(n) putbeeper();
+            dividir(13);
+            iterate(n) putbeeper();
+            sies(17);
+            iterate(n) putbeeper();
+            dividir(17);
+            iterate(n) putbeeper();
+            sies(19);
+            iterate(n) putbeeper();
+            dividir(19);
+            iterate(n) putbeeper();
+            sies(23);
+            iterate(n) putbeeper();
+            dividir(23);
+        }
+    }
+
+program() {
+    iterate(3) turnleft();
+    barrido(0);
+    inicio();
+    iterate(3) turnleft();
+    turnoff();
+}
+
+}

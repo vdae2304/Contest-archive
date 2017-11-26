@@ -1,0 +1,85 @@
+class program {
+
+     void sig() {
+        if (frontIsClear)
+            move();
+        else {        
+           turnleft();
+           move();
+           turnleft();
+           while (frontIsClear) move();
+           iterate(2) turnleft();
+        }
+    }
+
+    void buscapareja(n) {
+        while ((frontIsClear || leftIsClear) && notNextToABeeper)
+            sig();
+        if (nextToABeeper) {
+            iterate(pred(n)) if (nextToABeeper) pickbeeper();
+            if (nextToABeeper) {
+                pickbeeper();
+                if (nextToABeeper) {
+                    while (anyBeepersInBeeperBag) putbeeper();
+                    iterate(n) pickbeeper();
+                    if (frontIsBlocked && leftIsBlocked) {
+                        while (notFacingSouth) turnleft();
+                        turnoff();
+                    }
+                    sig();
+                    buscapareja(n);
+                }
+                else {
+                    iterate(2) {
+                        iterate(3) turnleft();
+                        while (frontIsClear) move();
+                    }
+                    iterate(2) turnleft();
+                    while (anyBeepersInBeeperBag) putbeeper();
+                    sig();
+                }
+            }
+            else {
+                while (anyBeepersInBeeperBag) putbeeper();
+                iterate(n) pickbeeper();
+                if (frontIsBlocked && leftIsBlocked) {
+                    while (notFacingSouth) turnleft();
+                    turnoff();
+                }
+                sig();
+                buscapareja(n);
+            }
+        }
+        else {
+            while (notFacingSouth) turnleft();
+            turnoff();
+        }
+    }
+
+    void cuenta(n) {
+        if (nextToABeeper) {
+            pickbeeper();
+            cuenta(succ(n));
+        }
+        else
+            buscapareja(n);
+    }
+
+    void recorrido() {
+        while ((frontIsClear || leftIsClear) && notNextToABeeper)
+            sig();
+        if (nextToABeeper) {
+            cuenta(0);
+        }
+        else {
+            while (notFacingNorth) turnleft();
+            turnoff();
+        }
+        recorrido();
+    }
+
+    program () {
+        while (notFacingEast) turnleft();
+        recorrido();
+    }
+}

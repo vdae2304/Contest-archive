@@ -1,0 +1,64 @@
+class program {
+    void sigposicion() {
+        if (frontIsClear)
+            move();
+        else {
+            while (notFacingNorth)
+                turnleft();
+            if (frontIsClear) {
+                move();
+                while (notFacingEast)
+                    turnleft();
+                if (frontIsBlocked)
+                    iterate(2) turnleft();
+            }
+            else
+                turnoff();
+        }
+    }
+
+    void recorrido(n) {
+        if (nextToABeeper && !iszero(pred(n))) {
+            iterate(pred(pred(n))) {
+                if (nextToABeeper)
+                    pickbeeper();
+            }
+            if (nextToABeeper) {
+                pickbeeper();
+                if (notNextToABeeper) {
+                    iterate(2) turnleft();
+                    if (frontIsClear) {
+                        move();
+                        turnoff();
+                    }
+                    iterate(2) turnleft();
+                }
+                else {
+                    pickbeeper();
+                    if (notNextToABeeper)
+                        turnoff();
+                    else {
+                        pickbeeper();
+                        if (notNextToABeeper && frontIsClear) {
+                            move();
+                            turnoff();
+                        }
+                    }
+                }
+            }
+         }
+         else if (iszero(pred(n)) && nextToABeeper) {
+             pickbeeper();
+             if (notNextToABeeper)
+                 turnoff();
+         }
+         sigposicion();
+         recorrido(succ(n));
+    }
+program() {
+    sigposicion();
+    recorrido(1);
+    turnoff();
+}
+
+}

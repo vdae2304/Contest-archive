@@ -1,0 +1,52 @@
+class program {
+	
+    void inicio(n) {
+    	if (frontIsClear) {
+            move();
+            inicio(n);
+            move();
+        }
+        else {
+            iterate(2) turnleft();
+            iterate(n) if (nextToABeeper) pickbeeper();
+            iterate(n) putbeeper();
+        }
+    }
+    
+    void actualiza(n) {
+    	iterate(2) turnleft();
+        inicio(n);
+    }
+
+    void cuenta(n) {
+    	if (nextToABeeper) {
+           pickbeeper();
+           cuenta(succ(n));
+        }
+        actualiza(n);
+        if (iszero(n)) {
+            iterate(2) turnleft();
+            while (frontIsClear) move();
+            iterate(2) turnleft();
+            while (nextToABeeper) pickbeeper();
+            turnoff();
+        }
+        if (frontIsClear) {
+            move();            
+            cuenta(pred(n));            
+        }
+        else {
+            iterate(2) turnleft();
+            while (frontIsClear)
+            	move();
+            iterate(2) turnleft();            
+            turnoff();
+        }
+    }
+
+    program () {    	
+        while (notFacingEast) turnleft();
+        cuenta(0);
+        turnoff();
+    }
+}

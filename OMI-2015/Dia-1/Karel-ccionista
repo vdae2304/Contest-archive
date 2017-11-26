@@ -1,0 +1,94 @@
+class program {
+    void transporte() {
+        if (nextToABeeper) {
+            pickbeeper();
+            transporte();
+            move();
+        }
+        else {
+            iterate(2) turnleft();
+            while (frontIsClear)
+                move();
+            iterate(3) turnleft();
+            move();
+            iterate(3) turnleft();
+        }
+    }
+
+    void checar() {
+        pickbeeper();
+        if (notNextToABeeper && frontIsClear) {
+            move();
+            if (notNextToABeeper) {
+                while (notNextToABeeper && frontIsClear)
+                    move();
+                if (nextToABeeper) {
+                    iterate(2) turnleft();
+                    while (frontIsClear)
+                        move();
+                    turnleft();
+                    move();
+                    turnoff();
+                }
+            }
+        }
+        else if (nextToABeeper) {
+           iterate(2) turnleft();
+           while (frontIsClear)
+               move();
+           turnleft();
+           move();
+           turnoff();
+        }
+    }
+
+program() {
+    while (notFacingEast)
+        turnleft();
+    while (frontIsClear) {
+        if (nextToABeeper) {
+            pickbeeper();
+            transporte();
+            putbeeper();
+            iterate(2) turnleft();
+            while (frontIsClear)
+                move();
+            turnleft();
+            move();
+            turnleft();
+        }
+        move();
+    }
+    if (nextToABeeper) {
+        pickbeeper();
+        transporte();
+        putbeeper();
+        iterate(2) turnleft();
+        while (frontIsClear)
+            move();
+        turnleft();
+        move();
+        turnleft();
+        while (frontIsClear)
+            move();
+    }
+    iterate(2) turnleft();
+    while (frontIsClear)
+        move();
+    iterate(3) turnleft();
+    move();
+    iterate(3) turnleft();
+    while (notNextToABeeper && frontIsClear)
+        move();
+    while (nextToABeeper)
+        checar();
+    iterate(2) turnleft();
+    while (frontIsClear)
+        move();
+    turnleft();
+    move();
+    iterate(2) turnleft();
+    turnoff();
+}
+
+}

@@ -1,0 +1,64 @@
+class program {
+
+void punta(m) {
+    if (!iszero(pred(m))) {
+        iterate(m) {
+            putbeeper();
+            move();
+        }
+        iterate(2) turnleft();
+        iterate(m) move();
+        iterate(2) turnleft();
+        move();
+        turnleft();
+        move();
+        iterate(3) turnleft();
+        punta(pred(pred(m)));
+    }
+}
+
+void alto(n) {
+    if (nextToABeeper) {
+        pickbeeper();
+        alto(n);
+        iterate(3) turnleft();
+        iterate(n) {
+            putbeeper();
+            move();
+        }
+        iterate(2) turnleft();
+        iterate(n) move();
+        iterate(3) turnleft();
+        move();
+    }
+    else {
+        iterate(2) turnleft();
+        iterate(2) move();
+        iterate(3) turnleft();
+    }
+}
+
+void ancho(n) {
+    if (nextToABeeper) {
+        pickbeeper();
+        ancho(succ(n));
+    }
+    else {
+        move();
+        alto(n);
+        turnleft();
+        move();
+        iterate(2) turnleft();
+        punta(succ(succ(n)));
+        putbeeper();
+    }
+}
+
+program() {
+    iterate(3) turnleft();
+    move();
+    ancho(0);
+    turnoff();
+}
+
+}

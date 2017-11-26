@@ -1,0 +1,108 @@
+class program {
+    void avanzar() {
+        if (notNextToABeeper) {
+            if (frontIsClear) {
+                move();
+                avanzar();
+            }
+            else if (leftIsClear) {
+                turnleft();
+                avanzar();
+            }
+            else if (rightIsClear) {
+                iterate(3) turnleft();
+                avanzar();
+            }
+        }
+    }
+
+    void cogepar(n) {
+        if (nextToABeeper) {
+            pickbeeper();
+            if (nextToABeeper) {
+                pickbeeper();
+                cogepar(succ(succ(n)));
+            }
+            else
+                iterate(succ(n)) putbeeper();
+        }
+    }
+
+    void par(n) {
+        avanzar();
+        if (nextToABeeper)  {
+            cogepar(0);
+            if (notNextToABeeper) {
+                par(succ(n));
+            }
+            else {
+                if (frontIsClear)
+                    move();
+                else if (leftIsClear)
+                    turnleft();
+                else
+                    iterate(3) turnleft();
+                par(n);
+            }
+        }
+        else
+            iterate(n) putbeeper();
+    }
+
+    void cogeimpar(m) {
+        if (nextToABeeper) {
+            pickbeeper();
+            if (nextToABeeper) {
+                pickbeeper();
+                cogeimpar(succ(succ(m)));
+            }
+        }
+        else
+            iterate(m) putbeeper();
+    }
+
+    void impar(m) {
+        avanzar();
+        if (nextToABeeper)  {
+            cogeimpar(0);
+            if (notNextToABeeper) {
+                impar(succ(m));
+            }
+            else {
+                if (frontIsClear)
+                    move();
+                else if (leftIsClear)
+                    turnleft();
+                else
+                    iterate(3) turnleft();
+                impar(m);
+            }
+        }
+        else
+            iterate(m) putbeeper();
+    }
+
+    void primero() {
+        if (nextToABeeper) {
+            pickbeeper();
+            if (nextToABeeper) {
+                pickbeeper();
+                primero();
+            }
+            else
+                impar(1);
+        }
+        else
+            par(1);
+    }
+
+
+program() {
+    while (frontIsBlocked)
+        turnleft();
+    avanzar();
+    primero();
+    turnoff();
+}
+
+}
