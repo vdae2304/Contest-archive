@@ -15,7 +15,6 @@ void print(vector<int> &P) {
 /*Returns C*x*P(x) + D*Q(x). Deg(P) > Deg(Q)*/
 vector<int> product(int C, vector<int> &P, int D, vector<int> &Q) {
     vector<int> R;
-    //int sign = D*Q[0] > 0 ? 1 : -1;
     R.push_back(D*Q[0]);
     for (int i = 1; i < Q.size(); i++)
         R.push_back(C*P[i - 1] + D*Q[i]);
