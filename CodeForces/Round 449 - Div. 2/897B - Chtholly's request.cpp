@@ -1,28 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
+
+long long zcy_numer(int n) {
+    long long a = n, b = 0, p = 1;
+    while (n) {
+        b = 10*b + n%10;
+        n /= 10;
+        p *= 10;
+    }
+    return a*p + b;
+}
+
 int main() {
     ios_base::sync_with_stdio(0); cin.tie();
-    long long k, p, sum = 0;
+    long long k, p, s = 0;
     cin >> k >> p;
-    vector<long long> zcy;
 
-    for (int i = 1; i <= 1e5; i++) {
-        stringstream toStr, toLong;
-        string s;
-        long long aux;
+    for (int i = 1; i <= k; i++)
+        s = (s + zcy_numer(i)) % p;
 
-        toStr << i;
-        toStr >> s;
-        reverse(s.begin(), s.end());
-        toLong << i << s;
-        toLong >> aux;
-
-        zcy.push_back(aux);
-    }
-    sort(zcy.begin(), zcy.end());
-
-    for (int i = 0; i < k; i++)
-        sum = (sum + zcy[i]) % p;
-    cout << sum << "\n";
-    return 0;
+    cout << s << "\n";
 }
